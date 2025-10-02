@@ -1,0 +1,13 @@
+pandas
+numpy
+torch
+scikit-learn
+pyod
+networkx
+plotly
+streamlit
+matplotlib
+seaborn
+paho-mqtt
+scapy  # Optional, if you enable WSL or use Npcap workaround
+pywin32  # For Windows-specific tasks
