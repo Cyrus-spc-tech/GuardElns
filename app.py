@@ -16,8 +16,8 @@ from config import DB_PATH, REFRESH_INTERVAL
 
 # Initialize
 conn = init_db(DB_PATH)
-start_capture_thread()  # Start real-time capture
-start_simulation_thread()  # Optional: Start IoT sim
+start_capture_thread()  
+start_simulation_thread()  
 
 st.title("GuardELNS Dashboard")
 
@@ -29,28 +29,23 @@ while True:
         features, processed_df = preprocess_traffic(df)
         model = train_model(features[:int(len(features)*0.8)])
         
-        # Detect anomalies
         anomalies, scores = detect_anomalies(model, features)
         processed_df['anomaly'] = anomalies
         processed_df['confidence_score'] = scores
         
-        # Risk profiling
         profiles = risk_profiling(processed_df)
-        check_for_alerts(profiles)  # Trigger alerts
+        check_for_alerts(profiles)  
         
-        # Network Graph
         st.subheader("Network Graph")
         G = nx.from_pandas_edgelist(processed_df, 'src_ip', 'dst_ip', ['packet_size'])
         pos = nx.spring_layout(G)
-        edge_x, edge_y = [], []  # (Add edge/node traces as before)
-        # ... (Full Plotly fig code from previous)
+        edge_x, edge_y = [], []  
+        
         st.plotly_chart(fig)
         
-        # Anomaly Trends
         st.subheader("Anomaly Trends")
         st.line_chart(processed_df[['timestamp', 'confidence_score']])
         
-        # Heatmap
         st.subheader("Anomaly Heatmap")
         fig, ax = plt.subplots()
         sns.heatmap(processed_df.pivot_table(index='src_ip', columns='dst_ip', values='confidence_score', aggfunc='mean'), ax=ax)

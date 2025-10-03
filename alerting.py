@@ -7,9 +7,9 @@ def send_alert(message):
     msg['Subject'] = 'GuardELNS Alert'
     msg['From'] = 'alert@guardelns.com'
     msg['To'] = EMAIL_TO
-    with smtplib.SMTP('localhost') as server:  # Configure for real SMTP
+    with smtplib.SMTP('localhost') as server:  
         server.send_message(msg)
-    print(message)  # Fallback to console
+    print(message)  
 
 def check_for_alerts(profiles):
     high_risk = profiles[profiles['risk_score'] > 70]
