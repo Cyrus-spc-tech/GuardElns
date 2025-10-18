@@ -1,0 +1,15 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+
+# Database files
+*.db
+*.db-journal
+
+# Model files
+models/*.pth
+
+# Test files
+test_data.py
+check_db.py
