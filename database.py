@@ -2,7 +2,8 @@ import sqlite3
 import pandas as pd
 
 def init_db(db_path):
-    conn = sqlite3.connect(db_path)
+    # check_same_thread=False allows SQLite to be used across threads
+    conn = sqlite3.connect(db_path, check_same_thread=False)
     conn.execute('''
         CREATE TABLE IF NOT EXISTS traffic (
             id INTEGER PRIMARY KEY,

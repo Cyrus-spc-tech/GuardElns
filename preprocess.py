@@ -2,11 +2,12 @@ import pandas as pd
 import numpy as np
 
 def preprocess_traffic(df):
-    # Drop rows with missing values to avoid NaN issues
-    df = df.dropna()
+    # Only drop rows with missing essential values (not anomaly/confidence/risk which are filled later)
+    essential_cols = ['src_ip', 'dst_ip', 'src_port', 'dst_port', 'protocol', 'packet_size', 'timestamp']
+    df = df.dropna(subset=essential_cols)
     
     # Map protocol to integers and ensure numeric conversion
-    df['protocol'] = df['protocol'].map({'TCP': 1, 'UDP': 2, 'Other': 0}).astype(float)
+    df['protocol'] = df['protocol'].map({'TCP': 1, 'UDP': 2, 'Other': 0}).fillna(0).astype(float)
     
     # Calculate derived features
     df['time_delta'] = df['timestamp'].diff().fillna(0).astype(float)

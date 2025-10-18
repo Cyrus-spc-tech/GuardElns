@@ -5,7 +5,10 @@ from database import insert_traffic, init_db
 from config import CAPTURE_COUNT, DB_PATH
 import random
 
-def generate_synthetic_traffic(conn):
+def generate_synthetic_traffic():
+    # Create a new connection in this thread
+    conn = init_db(DB_PATH)
+    print("Synthetic traffic generator started...")
     while True:
         data = []
         for _ in range(CAPTURE_COUNT):
@@ -23,10 +26,9 @@ def generate_synthetic_traffic(conn):
             })
         df = pd.DataFrame(data)
         insert_traffic(conn, df)
+        print(f"Inserted {len(df)} synthetic packets...")
         time.sleep(1)
 
 def start_capture_thread():
-    conn = init_db(DB_PATH)
-    thread = threading.Thread(target=generate_synthetic_traffic, args=(conn,), daemon=True)
+    thread = threading.Thread(target=generate_synthetic_traffic, daemon=True)
     thread.start()
-    return conn
