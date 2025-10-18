@@ -13,14 +13,15 @@ class Autoencoder(nn.Module):
 
     def forward(self, x):
         return self.decoder(self.encoder(x))
-"""
+
 def train_model(features, model_path='models/autoencoder.pth'):
-   
+    # Create models directory if it doesn't exist
     os.makedirs(os.path.dirname(model_path), exist_ok=True)
     
+    # Try to load existing model
     try:
         if os.path.exists(model_path):
-            return torch.load(model_path)
+            return torch.load(model_path, weights_only=False)
     except Exception as e:
         print(f"Failed to load model: {e}. Retraining...")
     
@@ -37,10 +38,10 @@ def train_model(features, model_path='models/autoencoder.pth'):
             optimizer.zero_grad()
             loss.backward()
             optimizer.step()
-   
+    # Save the model
     torch.save(model, model_path)
     return model
-"""
+
 def detect_anomalies(model, features):
     test_tensor = torch.from_numpy(features).float()
     with torch.no_grad():
