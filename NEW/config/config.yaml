@@ -1,0 +1,45 @@
+network:
+  interface: "auto"  # Network interface to monitor (auto-detect or specify like "eth0", "wlan0")
+  capture_filter: "tcp or udp"
+  packet_count: 1000  # Number of packets to capture per session
+  timeout: 60  # Capture timeout in seconds
+
+detection:
+  model: "isolation_forest"  # Options: isolation_forest, autoencoder, ocsvm, lof
+  contamination: 0.1  # Expected proportion of outliers
+  threshold: 0.7  # Anomaly score threshold
+  retrain_interval: 3600  # Model retraining interval in seconds
+
+simulation:
+  iot_devices: 10  # Number of simulated IoT devices
+  mqtt_broker: "localhost"
+  mqtt_port: 1883
+  traffic_rate: 5  # Messages per second
+
+alerts:
+  enabled: true
+  email_enabled: false
+  smtp_server: "smtp.gmail.com"
+  smtp_port: 587
+  sender_email: "your-email@gmail.com"
+  receiver_email: "admin@example.com"
+  slack_webhook: ""  # Optional Slack webhook URL
+
+database:
+  type: "sqlite"  # Options: sqlite, postgresql
+  sqlite_path: "data/database/guardelns.db"
+  postgresql_host: "localhost"
+  postgresql_port: 5432
+  postgresql_db: "guardelns"
+  postgresql_user: "admin"
+  postgresql_password: "password"
+
+visualization:
+  refresh_interval: 5  # Dashboard refresh interval in seconds
+  max_display_packets: 100
+  chart_theme: "plotly_dark"  # Options: plotly, plotly_dark, seaborn
+
+logging:
+  level: "INFO"  # Options: DEBUG, INFO, WARNING, ERROR
+  log_file: "data/logs/guardelns.log"
+  max_log_size: 10485760  # 10 MB
