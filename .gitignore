@@ -1,15 +1,37 @@
-# Python cache
+# Python
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+*.egg-info/
+dist/
+build/
 
-# Database files
-*.db
-*.db-journal
+# Data
+data/logs/*.log
+data/database/*.db
+data/models/*.pkl
+*.pcap
+*.pcapng
 
-# Model files
-models/*.pth
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 
-# Test files
-test_data.py
-check_db.py
+# OS
+.DS_Store
+Thumbs.db
+
+# Config
+.env
+config/local.yaml
+
+# Streamlit
+.streamlit/secrets.toml
